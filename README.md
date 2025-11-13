@@ -1,9 +1,4 @@
-Below is a **professional, complete, production-grade README.md** for your **Loan Origination & Approval System** (Node.js + React + MongoDB).
 
-You can **copy–paste this directly into your GitHub README.md**.
-It is formatted, clean, includes installation, setup, API docs, features, screenshots sections, and everything expected in a real project submission.
-
----
 
 # 📄 **Loan Origination & Approval System**
 
