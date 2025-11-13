@@ -1,0 +1,206 @@
+/* Login.css - drop into same folder or adjust import path */
+
+/* Page background + animated orbs */
+:root{
+  --card-w: 420px;
+  --glass-bg: rgba(255,255,255,0.06);
+  --accent: #7c5cff;
+  --accent-2: #4ad3ff;
+  --muted: rgba(255,255,255,0.75);
+  --blur: 12px;
+  --glass-border: rgba(255,255,255,0.08);
+}
+
+*{box-sizing:border-box}
+body,html,#root { height:100%; margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+
+/* full-screen centered layout */
+.login-page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(135deg, #0f172a 0%, #071033 45%, #091226 100%);
+  position:relative;
+  overflow:hidden;
+  padding:40px;
+}
+
+/* soft animated orbs in background */
+.bg-orb{
+  position:absolute;
+  inset:-20%;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(124,92,255,0.18), transparent 12%),
+    radial-gradient(circle at 80% 80%, rgba(74,211,255,0.14), transparent 18%),
+    radial-gradient(circle at 70% 20%, rgba(255,111,97,0.06), transparent 14%);
+  filter: blur(36px);
+  animation: drift 12s linear infinite;
+  z-index:0;
+}
+@keyframes drift {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  50% { transform: translateY(-24px) rotate(15deg) scale(1.03); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+/* glass card */
+.login-card{
+  width:var(--card-w);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:18px;
+  padding:28px;
+  position:relative;
+  z-index:2;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  backdrop-filter: blur(var(--blur)) saturate(120%);
+  border: 1px solid var(--glass-border);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  transform: translateY(20px) scale(0.995);
+  animation: popIn 540ms cubic-bezier(.2,.9,.3,1) both;
+}
+
+/* small entrance */
+@keyframes popIn {
+  from { opacity:0; transform: translateY(30px) scale(0.985); filter: blur(6px); }
+  to { opacity:1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* brand area */
+.brand{ text-align:center; color:var(--muted); margin-bottom:6px; }
+.logo{
+  width:56px; height:56px; margin:0 auto 8px;
+  border-radius:12px; display:flex; align-items:center; justify-content:center;
+  background: linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:white; font-weight:700; font-size:18px; box-shadow: 0 6px 18px rgba(76,55,255,0.18);
+}
+.brand h3{ margin:0; font-size:20px; color:#fff; letter-spacing:0.2px; }
+.brand .sub{ margin:4px 0 0; font-size:13px; color:rgba(255,255,255,0.65); }
+
+/* form fields - floating label + underline animation */
+.field{
+  position:relative;
+  display:block;
+  margin:0;
+  padding:6px 4px 0 4px;
+}
+.field input{
+  width:100%;
+  background:transparent;
+  border:0;
+  outline:0;
+  padding:14px 8px 6px 8px;
+  color: #e6eef8;
+  font-size:15px;
+  border-radius:8px;
+  caret-color:var(--accent-2);
+}
+.field .label{
+  position:absolute;
+  left:10px;
+  top:16px;
+  transform-origin:left top;
+  transition: all 160ms ease;
+  font-size:13px;
+  color:rgba(255,255,255,0.6);
+  pointer-events:none;
+}
+.field.filled .label,
+.field input:focus + .label {
+  top:6px;
+  font-size:11px;
+  color:var(--accent-2);
+  transform: translateY(-2px);
+}
+
+/* animated underline */
+.field .underline{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:6px;
+  height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition: transform 220ms cubic-bezier(.2,.9,.3,1);
+  border-radius:2px;
+  opacity:0.95;
+  pointer-events:none;
+}
+.field input:focus ~ .underline,
+.field.filled .underline {
+  transform:scaleX(1);
+}
+
+/* subtle hint under fields */
+.field + .field { margin-top:4px; }
+
+/* button with glow and press animation */
+.btn{
+  margin-top:6px;
+  display:inline-block;
+  width:100%;
+  padding:12px 18px;
+  font-weight:600;
+  font-size:15px;
+  border-radius:12px;
+  border:0;
+  cursor:pointer;
+  background: linear-gradient(90deg, rgba(124,92,255,0.95), rgba(74,211,255,0.95));
+  color:#041026;
+  box-shadow: 0 8px 22px rgba(76,55,255,0.12), 0 2px 8px rgba(74,211,255,0.06) inset;
+  transform: translateZ(0);
+  transition: transform 180ms cubic-bezier(.2,.9,.3,1), box-shadow 180ms;
+  position:relative;
+  overflow:hidden;
+}
+
+/* click scale */
+.btn:active{ transform: translateY(2px) scale(0.996); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
+
+/* subtle animated sheen */
+.btn::after{
+  content:'';
+  position:absolute;
+  top:-40%;
+  left:-30%;
+  width:60%;
+  height:180%;
+  transform: rotate(25deg) translateX(-110%);
+  background: linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05), rgba(255,255,255,0));
+  transition: transform 900ms cubic-bezier(.2,.9,.3,1);
+  pointer-events:none;
+}
+.btn:hover::after{ transform: rotate(25deg) translateX(120%); }
+
+/* footer links */
+.footer{
+  margin-top:6px;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:center;
+  color:rgba(255,255,255,0.65);
+  font-size:13px;
+}
+.footer a{ color:rgba(255,255,255,0.7); text-decoration:none; transition: color 160ms; }
+.footer a:hover{ color:var(--accent-2); }
+
+/* responsive */
+@media (max-width:480px){
+  :root { --card-w: 92vw; }
+  .brand h3{ font-size:18px; }
+}
+
+/* optional micro bounce to draw attention to logo on load */
+.logo{
+  animation: logoBounce 900ms cubic-bezier(.2,.9,.3,1);
+}
+@keyframes logoBounce {
+  0%{ transform: translateY(-6px) scale(.98); }
+  60%{ transform: translateY(0) scale(1.02); }
+  100%{ transform: translateY(0) scale(1); }
+}
